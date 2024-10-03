@@ -104,7 +104,7 @@ def zigzag(df, depth, deviation, backstep, pip_size):
     return df
 
 
-df = pd.read_csv('XAUUSD_Candlestick_15_M_BID_22.08.2024-30.09.2024.csv')
+df = pd.read_csv('XAUUSD_Candlestick_15_M_BID_22.08.2024-26.09.2024.csv')
 df['datetime'] = pd.to_datetime(df['Gmt time'], dayfirst=True)
 df = df.drop(['Gmt time'], axis=1)
 
