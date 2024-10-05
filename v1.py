@@ -171,9 +171,9 @@ for i in range(1,len(df)+1):
         if df2['datetime'].tolist()[-1].minute == 0: # if time its the hour mark
             if current_trough['bars_passed'] >= 6: # if at least 6 bars pass
                 if f"sell_{current_trough['price']}" not in [f"{i['order']}_{i['price']}" for i in orders_to_activate]: # making sure that we haven't placed this sell stop already in our orders
-                    if df2['Low'].tolist()[-1] < current_trough['price']: # if the newest bar's Low is lower than the current_trough, don't make the order and instead start looking for either a Peak or Trough by resetting the dataframe from this current timestamp
+                    if df2['Open'].tolist()[-1] < current_trough['price']: # if the newest bar's Open is lower than the current_trough, don't make the order and instead start looking for either a Peak or Trough by resetting the dataframe from this current timestamp
                         p = df2.index[-1]
-                    if df2['Low'].tolist()[-1] > current_trough['price']: # if the newest bar's Low is higher than the current_trough, we can place the sell stop finally
+                    if df2['Open'].tolist()[-1] > current_trough['price']: # if the newest bar's Open is higher than the current_trough, we can place the sell stop finally (in the final version this should be a parameter of distance of pips between current Open and current_trough)
                         print(f"Placing sell stop order at price {current_trough['price']} at {df2['datetime'].tolist()[-1]}")
                         sell_stop_order['order'] = 'sell'
                         sell_stop_order['price'] = current_trough['price']
@@ -187,9 +187,9 @@ for i in range(1,len(df)+1):
 
             if current_peak['bars_passed'] >= 6: # if at least 6 bars pass
                 if f"buy_{current_peak['price']}" not in [f"{i['order']}_{i['price']}" for i in orders_to_activate]: # making sure that we haven't placed this buy stop already in our orders
-                    if df2['High'].tolist()[-1] > current_peak['price']: # if the newest bar's High is higher than the current_peak, don't make the order and instead start looking for either a Peak or Trough by resetting the dataframe from this current timestamp
+                    if df2['Open'].tolist()[-1] > current_peak['price']: # if the newest bar's High is higher than the current_peak, don't make the order and instead start looking for either a Peak or Trough by resetting the dataframe from this current timestamp
                         p = df2.index[-1]
-                    if df2['High'].tolist()[-1] < current_peak['price']: # if the newest bar's High is lower than the current_peak, we can place the buy stop finally
+                    if df2['Open'].tolist()[-1] < current_peak['price']: # if the newest bar's High is lower than the current_peak, we can place the buy stop finally (in the final version this should be a parameter of distance of pips between current Open and current_peak)
                         print(f"Placing buy stop order at price {current_peak['price']} at {df2['datetime'].tolist()[-1]}")
                         buy_stop_order['order'] = 'buy'
                         buy_stop_order['price'] = current_peak['price']
